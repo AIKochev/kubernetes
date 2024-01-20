@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: story-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: story-app
+  template:
+    metadata:
+      labels:
+        app: story-app
+    spec:
+      containers:
+        - name: story-app
+          image: alexkochev/k8s-volumes:v3
+          env:
+            - name: STORY_FOLDER
+              valueFrom: 
+                configMapKeyRef:
+                  name: data-store-env
+                  key: folder
+              #value: 'story'
+          volumeMounts: 
+            - mountPath: /app/story
+              name: story-volume
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      volumes:
+        - name: story-volume
+          persistentVolumeClaim:
+            claimName: host-pvc
+
+          # Emptry Dir Volume
+          # emptyDir: {}
+          # Host Path Volume
+          #hostPath: 
+          #  path: /data
+          # type: DirectoryCreate
