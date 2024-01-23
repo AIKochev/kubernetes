@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment 
 metadata: 
-  name: users-deployments
+  name: users-deployment
 spec: 
   replicas: 1
   selector:
@@ -14,7 +14,10 @@ spec:
     spec:
       containers:
         - name: users
-          image: alexkochev/users-api-node:v1.1
+          image: alexkochev/users-api-node:v3.9
+          env:
+            - name: AUTH_ADDRESS
+              value: "10.97.174.199" 
           resources:
             limits:
               memory: "128Mi"
