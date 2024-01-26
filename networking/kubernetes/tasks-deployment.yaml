@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: tasks
-        image:  alexkochev/tasks-api-node:latest
+        image:  alexkochev/tasks-api-node:v1
         env:
           - name: TASKS_FOLDER
             value: "tasks"
